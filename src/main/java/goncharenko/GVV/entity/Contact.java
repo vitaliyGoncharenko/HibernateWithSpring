@@ -10,8 +10,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "contact")
+@NamedQueries({
+        @NamedQuery(name="Contact.findByid",
+                query="select distinct c from Contact c left join fetch c.contactTelDetails t left join fetch c.hobbies h where c.id = :id"),
+        @NamedQuery(name = "Contact.findAllWithDetail",
+                query = "select distinct c from Contact c left join fetch c.contactTelDetails t left join fetch c.hobbies h")
+})
 public class Contact {
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private Date birthDate;
@@ -22,11 +28,11 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,6 +81,9 @@ public class Contact {
 
     public void setContactTelDetails(Set<ContactTelDetail> contactTelDetails) {
         this.contactTelDetails = contactTelDetails;
+//        for(ContactTelDetail contactTelDetail: contactTelDetails){
+//            contactTelDetail.setContactId(this.getId());
+//        }
     }
 
     public void addContactTelDetail(ContactTelDetail contactTelDetail){
@@ -124,13 +133,13 @@ public class Contact {
                 '}';
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
-        result = 31 * result + version;
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = id;
+//        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+//        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+//        result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
+//        result = 31 * result + version;
+//        return result;
+//    }
 }

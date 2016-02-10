@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class ContactTelDetail {
     private int id;
     private int version;
+    private Long contactId;
     private String telType;
     private String telNumber;
     private Contact contact;
@@ -41,6 +42,15 @@ public class ContactTelDetail {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    @Column(name = "CONTACT_ID", nullable = false, insertable = false, updatable = false)
+    public Long getContactId() {
+        return this.contactId;
+    }
+
+    public void setContactId(Long contactId) {
+        this.contactId = contactId;
     }
 
     @Column(name = "TEL_TYPE", nullable = false, length = 20)
@@ -100,8 +110,10 @@ public class ContactTelDetail {
         return "ContactTelDetail{" +
                 "id=" + id +
                 ", version=" + version +
+                ", contactId=" + contactId +
                 ", telType='" + telType + '\'' +
                 ", telNumber='" + telNumber + '\'' +
+                ", contact=" + contact +
                 '}';
     }
 }
